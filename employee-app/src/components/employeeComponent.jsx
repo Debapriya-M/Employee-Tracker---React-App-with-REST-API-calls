@@ -1,10 +1,19 @@
 import React, { Component } from "react";
-import { Table, Button } from "reactstrap";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Table,
+  Button,
+  FormGroup,
+} from "reactstrap";
 import axios from "axios";
 
 class Employee extends Component {
   state = {
     employees: [],
+    newEmployeeModal: false,
   };
 
   componentWillMount() {
@@ -13,6 +22,18 @@ class Employee extends Component {
       this.setState({
         employees: response.data,
       });
+    });
+  }
+
+  toggleNewEmployeeModal() {
+    this.setState({
+      newEmployeeModal: !this.state.newEmployeeModal,
+    });
+  }
+
+  addEmployee() {
+    axios.post("/employees").then((response) => {
+      console.log("Add Employee initiated");
     });
   }
 
@@ -52,11 +73,41 @@ class Employee extends Component {
     });
 
     return (
-      <div class="App Container">
+      <div className="App Container">
         <h1 className="m-3">Employee Tracker</h1>
-        <Button color="primary" className="my-5 mx-3">
+        <Button
+          color="primary"
+          className="my-5 mx-3"
+          onClick={this.toggleNewEmployeeModal.bind(this)}
+        >
           Add Employee
         </Button>
+        <Modal
+          isOpen={this.state.newEmployeeModal}
+          toggle={this.toggleNewEmployeeModal.bind(this)}
+        >
+          <ModalHeader toggle={this.toggleNewEmployeeModal.bind(this)}>
+            Add Employee
+          </ModalHeader>
+          <ModalBody>
+            <FormGroup></FormGroup>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              onClick={this.toggleNewEmployeeModal.bind(this)}
+            >
+              Add Employee
+            </Button>{" "}
+            <Button
+              color="secondary"
+              onClick={this.toggleNewEmployeeModal.bind(this)}
+            >
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+
         <Table className="mx-3">
           <thead>
             <tr>
