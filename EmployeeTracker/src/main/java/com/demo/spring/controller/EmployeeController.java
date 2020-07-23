@@ -34,7 +34,7 @@ public class EmployeeController {
 
 	}
 
-	@DeleteMapping(path = "/employee/{id}")
+	@DeleteMapping(path = "/employees/{id}")
 	private Map<String, Boolean> deleteEmployeeById(@PathVariable(value = "id") Long empId) throws Exception {
 		return employeeHandler.deleteEmployee(empId);
 	}
