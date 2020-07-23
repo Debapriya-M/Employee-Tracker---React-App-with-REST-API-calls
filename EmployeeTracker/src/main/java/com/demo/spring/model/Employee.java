@@ -1,5 +1,6 @@
 package com.demo.spring.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "Employee")
 public class Employee {
 
-	private Long id;
+	private long id;
 	private String firstName;
 	private String lastName;
 	private String emailId;
@@ -27,14 +28,15 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getEmpId() {
+	public long getEmpId() {
 		return id;
 	}
 
-	public void setEmpId(Long id) {
+	public void setEmpId(long id) {
 		this.id = id;
 	}
-
+	
+	@Column(name="firstName", nullable=false)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -43,6 +45,7 @@ public class Employee {
 		this.firstName = firstName;
 	}
 
+	@Column(name="lastName", nullable=false)
 	public String getLastName() {
 		return lastName;
 	}
@@ -51,6 +54,7 @@ public class Employee {
 		this.lastName = lastName;
 	}
 
+	@Column(name="emailId", nullable=false)
 	public String getEmailId() {
 		return emailId;
 	}
