@@ -7,12 +7,19 @@ import {
   Table,
   Button,
   FormGroup,
+  Label,
+  Input,
 } from "reactstrap";
 import axios from "axios";
 
 class Employee extends Component {
   state = {
     employees: [],
+    newEmpData: {
+      firstName: "",
+      lastName: "",
+      emailId: "",
+    },
     newEmployeeModal: false,
   };
 
@@ -32,8 +39,18 @@ class Employee extends Component {
   }
 
   addEmployee() {
-    axios.post("/employees").then((response) => {
-      console.log("Add Employee initiated");
+    axios.post("/employees", this.state.newEmpData).then((response) => {
+      let { employees } = this.state;
+      employees.push(response.data);
+      this.setState({
+        employees,
+        newEmployeeModal: false,
+        newEmpData: {
+          firstName: "",
+          lastName: "",
+          emailId: "",
+        },
+      });
     });
   }
 
@@ -90,13 +107,45 @@ class Employee extends Component {
             Add Employee
           </ModalHeader>
           <ModalBody>
-            <FormGroup></FormGroup>
+            <FormGroup>
+              <Label for="firstName">Enter first name of Employee</Label>
+              <Input
+                id="firstName"
+                value={this.state.newEmpData.firstName}
+                onChange={(e) => {
+                  let { newEmpData } = this.state;
+                  newEmpData.firstName = e.target.value;
+                  this.setState({ newEmpData });
+                }}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="lastName">Enter last name of Employee</Label>
+              <Input
+                id="lastName"
+                value={this.state.newEmpData.lastName}
+                onChange={(e) => {
+                  let { newEmpData } = this.state;
+                  newEmpData.lastName = e.target.value;
+                  this.setState({ newEmpData });
+                }}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="emailId">Enter email ID of Employee</Label>
+              <Input
+                id="emailId"
+                value={this.state.newEmpData.emailId}
+                onChange={(e) => {
+                  let { newEmpData } = this.state;
+                  newEmpData.emailId = e.target.value;
+                  this.setState({ newEmpData });
+                }}
+              />
+            </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <Button
-              color="primary"
-              onClick={this.toggleNewEmployeeModal.bind(this)}
-            >
+            <Button color="primary" onClick={this.addEmployee.bind(this)}>
               Add Employee
             </Button>{" "}
             <Button
